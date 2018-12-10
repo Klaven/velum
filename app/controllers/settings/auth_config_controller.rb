@@ -9,8 +9,8 @@ class Settings::AuthConfigController < SettingsController
   def create
     @errors = Pillar.apply audit_params
     if @errors.empty?
-      Velum::Salt.call(targets: "admin", action: "saltutil.refresh_pillar")
-      Velum::Salt.apply_state(targets: "admin", state: "addons/dex")
+      Velum::Salt.call(targets: "*", action: "saltutil.refresh_pillar")
+      Velum::Salt.apply_state(targets: "*", state: "addons/dex/update.sls")
       redirect_to settings_auth_config_index_path,
         notice: "Auth config settings successfully saved."
     else

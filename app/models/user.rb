@@ -219,9 +219,9 @@ class User < ApplicationRecord
     attrs = {
       cn:           "cn=#{groupName}",
       objectclass:  ["top", "groupOfUniqueNames"],
-      uniqueMember: "uid=#{uid},#{treebase}"
+      uniqueMember: "uid=#{uid},ou=People,#{treebase}"
     }
-    dn = "cn=#{groupName},#{treebase}"
+    dn = "cn=#{groupName},ou=Groups,#{treebase}"
     result = ldap.add( :dn => dn, :attributes => attrs )
     op_msg = ldap.get_operation_result.message
     msg = "DN: #{dn} Unable to create Group organizational unit in LDAP: #{op_msg}"
